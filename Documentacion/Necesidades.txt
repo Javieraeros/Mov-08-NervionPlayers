@@ -1,0 +1,27 @@
+Documento de especificación de necesidades:
+El objetivo principal de esta aplicación es el manejo de la información (por parte de un alumno) de todo lo relacionado con las competiciones
+que se realizán en el IES Nervión durante los recreos.
+Para el manejo de los datos tendremos una API REST que nos proporcionará toda la información necesaria.
+Para el manejo de susodicha información necesitaremos de un Cliente HTTP que desarrollaremos con Retrofit 2. Dicha documentación estará presentada en otro fichero.
+
+Nuestra aplicación podrá usarse tanto para alumnos registrados, como para invitados.
+Los invitados solo tendrán acceso para ver la lista de partidos/duelos
+
+Para el registro del alumno será necesario:
+	-Nombre
+	-Apellidos
+	-correo(Único)
+	-alias(Único)
+	-curso
+	-letra
+	-foto
+	-contraseña(Con restricciones)
+
+Para el login, el usuario introducirá el correo o el alias y la contraseña, en caso de no ser válida, se volverá a la pantalla de error mostrando un mensaje.
+
+Añadiremos el uso de notificaciones, por lo que usaremos Firebase, además de implementar ciertos métodos en nuestra API para que así consigamos  que la susodicha
+nos envié las notificaciones a nuestro correo.
+
+
+Futuras versiones: Añadir SQLite en el qeu guardamos todos los datos,y solo se usará la API para saber si hay diferencias, y en caso de que las haya, las descargaremos.
+
