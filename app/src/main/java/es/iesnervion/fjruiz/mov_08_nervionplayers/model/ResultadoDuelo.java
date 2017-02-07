@@ -1,5 +1,4 @@
-﻿using System;
-/**************
+﻿/**************
 * Restricciones
 * *************
 * ganados,empatados y perdidos>=0
@@ -17,6 +16,8 @@ public class ResultadoDuelo
     //endregion
 
     //region Constructores
+    public ResultadoDuelo(){}
+
     public ResultadoDuelo(int id, int id_Alumno, int ganados, int empatados, int perdidos)
     {
         this.id = id;
@@ -29,70 +30,46 @@ public class ResultadoDuelo
 
     //region Propiedades
 
-    public int Id
-    {
-        get
-        {
-            return id;
-        }
-
-        set
-        {
-            id = value;
-        }
+    public int getId() {
+        return id;
     }
 
-    public int Id_Alumno
-    {
-        get
-        {
-            return id_Alumno;
-        }
-
-        set
-        {
-            id_Alumno = value;
-        }
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int Ganados
-    {
-        get
-        {
-            return ganados;
-        }
-
-        set
-        {
-            ganados = value;
-        }
+    public int getId_Alumno() {
+        return id_Alumno;
     }
 
-    public int Empatados
-    {
-        get
-        {
-            return empatados;
-        }
-
-        set
-        {
-            empatados = value;
-        }
+    public void setId_Alumno(int id_Alumno) {
+        this.id_Alumno = id_Alumno;
     }
 
-    public int Perdidos
-    {
-        get
-        {
-            return perdidos;
-        }
-
-        set
-        {
-            perdidos = value;
-        }
+    public int getGanados() {
+        return ganados;
     }
+
+    public void setGanados(int ganados) {
+        this.ganados = ganados;
+    }
+
+    public int getEmpatados() {
+        return empatados;
+    }
+
+    public void setEmpatados(int empatados) {
+        this.empatados = empatados;
+    }
+
+    public int getPerdidos() {
+        return perdidos;
+    }
+
+    public void setPerdidos(int perdidos) {
+        this.perdidos = perdidos;
+    }
+
     //endregion
 
     //region Métodos

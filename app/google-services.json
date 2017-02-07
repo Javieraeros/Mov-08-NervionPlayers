@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "475411459511",
+    "firebase_url": "https://nervionplayers-b6de3.firebaseio.com",
+    "project_id": "nervionplayers-b6de3",
+    "storage_bucket": "nervionplayers-b6de3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475411459511:android:bcc472cd6d75d7e7",
+        "android_client_info": {
+          "package_name": "es.iesnervion.fjruiz.mov_08_nervionplayers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475411459511-l3p0hh3h285t340qmua4n0bq4uqdql4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Oq8b99AxcSN-YTKGAvz0avChP1upSYg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475411459511-l3p0hh3h285t340qmua4n0bq4uqdql4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

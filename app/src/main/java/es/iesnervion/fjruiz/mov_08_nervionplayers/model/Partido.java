@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿import android.graphics.Bitmap;
 
-namespace NervionPlayers_Ent.Modelos
-{
-    public class Partido
+import java.util.Date;
+
+public class Partido
     {
         //region Atributos
 
@@ -13,9 +10,9 @@ namespace NervionPlayers_Ent.Modelos
         private int id_Local;
         private int id_Visitante;
         private int id_Deporte;
-        private DateTime fecha_Partido;
-        private DateTime fecha_Creacion;
-        private Byte[] foto;
+        private Date fecha_Partido;
+        private Date fecha_Creacion;
+        private Bitmap foto;
         private int resultado_Local;
         private int resultado_Visitante;
         private String lugar;
@@ -32,19 +29,21 @@ namespace NervionPlayers_Ent.Modelos
 
         }
 
-        public Partido(int id, int id_Local, int id_Visitante, int id_Deporte, DateTime fecha_Partido, DateTime fecha_Creacion, byte[] foto, int resultado_Local, int resultado_Visitante, string lugar, string notas)
+        public Partido(int id, int id_Local, int id_Visitante, int id_Deporte, Date fecha_Partido,
+                       Date fecha_Creacion, Bitmap foto, int resultado_Local, int resultado_Visitante,
+                       String lugar, String notas)
         {
-            Id = id;
-            Id_Local = id_Local;
-            Id_Visitante = id_Visitante;
-            Id_Deporte = id_Deporte;
-            Fecha_Partido = fecha_Partido;
-            Fecha_Creacion = fecha_Creacion;
-            Foto = foto;
-            Resultado_Local = resultado_Local;
-            Resultado_Visitante = resultado_Visitante;
-            Lugar = lugar;
-            Notas = notas;
+            this.id = id;
+            this.id_Local = id_Local;
+            this.id_Visitante = id_Visitante;
+            this.id_Deporte = id_Deporte;
+            this.fecha_Partido = fecha_Partido;
+            this.fecha_Creacion = fecha_Creacion;
+            this.foto = foto;
+            this.resultado_Local = resultado_Local;
+            this.resultado_Visitante = resultado_Visitante;
+            this.lugar = lugar;
+            this.notas = notas;
         }
 
 
@@ -52,148 +51,95 @@ namespace NervionPlayers_Ent.Modelos
         //endregion
 
         //region Propiedades
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
 
-            set
-            {
-                id = value;
-            }
+        public int getId() {
+            return id;
         }
 
-        public int Id_Local
-        {
-            get
-            {
-                return id_Local;
-            }
-
-            set
-            {
-                id_Local = value;
-            }
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public int Id_Visitante
-        {
-            get
-            {
-                return id_Visitante;
-            }
-
-            set
-            {
-                id_Visitante = value;
-            }
+        public int getId_Local() {
+            return id_Local;
         }
 
-        public int Id_Deporte
-        {
-            get
-            {
-                return id_Deporte;
-            }
-
-            set
-            {
-                id_Deporte = value;
-            }
+        public void setId_Local(int id_Local) {
+            this.id_Local = id_Local;
         }
 
-        public DateTime Fecha_Partido
-        {
-            get
-            {
-                return fecha_Partido;
-            }
-
-            set
-            {
-                fecha_Partido = value;
-            }
+        public int getId_Visitante() {
+            return id_Visitante;
         }
 
-        public DateTime Fecha_Creacion
-        {
-            get
-            {
-                return fecha_Creacion;
-            }
-
-            set
-            {
-                fecha_Creacion = value;
-            }
+        public void setId_Visitante(int id_Visitante) {
+            this.id_Visitante = id_Visitante;
         }
 
-        public byte[] Foto
-        {
-            get
-            {
-                return foto;
-            }
-
-            set
-            {
-                foto = value;
-            }
+        public int getId_Deporte() {
+            return id_Deporte;
         }
 
-        public int Resultado_Local
-        {
-            get
-            {
-                return resultado_Local;
-            }
-
-            set
-            {
-                resultado_Local = value;
-            }
+        public void setId_Deporte(int id_Deporte) {
+            this.id_Deporte = id_Deporte;
         }
 
-        public int Resultado_Visitante
-        {
-            get
-            {
-                return resultado_Visitante;
-            }
-
-            set
-            {
-                resultado_Visitante = value;
-            }
+        public Date getFecha_Partido() {
+            return fecha_Partido;
         }
 
-        public string Lugar
-        {
-            get
-            {
-                return lugar;
-            }
-
-            set
-            {
-                lugar = value;
-            }
+        public void setFecha_Partido(Date fecha_Partido) {
+            this.fecha_Partido = fecha_Partido;
         }
 
-        public string Notas
-        {
-            get
-            {
-                return notas;
-            }
-
-            set
-            {
-                notas = value;
-            }
+        public Date getFecha_Creacion() {
+            return fecha_Creacion;
         }
+
+        public void setFecha_Creacion(Date fecha_Creacion) {
+            this.fecha_Creacion = fecha_Creacion;
+        }
+
+        public Bitmap getFoto() {
+            return foto;
+        }
+
+        public void setFoto(Bitmap foto) {
+            this.foto = foto;
+        }
+
+        public int getResultado_Local() {
+            return resultado_Local;
+        }
+
+        public void setResultado_Local(int resultado_Local) {
+            this.resultado_Local = resultado_Local;
+        }
+
+        public int getResultado_Visitante() {
+            return resultado_Visitante;
+        }
+
+        public void setResultado_Visitante(int resultado_Visitante) {
+            this.resultado_Visitante = resultado_Visitante;
+        }
+
+        public String getLugar() {
+            return lugar;
+        }
+
+        public void setLugar(String lugar) {
+            this.lugar = lugar;
+        }
+
+        public String getNotas() {
+            return notas;
+        }
+
+        public void setNotas(String notas) {
+            this.notas = notas;
+        }
+
         //endregion
 
         //region Metodos
@@ -201,4 +147,3 @@ namespace NervionPlayers_Ent.Modelos
         //endregion
 
     }
-}

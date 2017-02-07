@@ -1,100 +1,85 @@
-﻿import java.util.Date;
+﻿package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
+
+import android.graphics.Bitmap;
+
+import java.util.Date;
 
 public class Equipo
+{
+    private int id;
+    private int id_Creador;
+    private int categoria;
+    private String nombre;
+    private Date fecha_Creacion;
+    private Bitmap foto;
+    private boolean confirmado;
+
+    public Equipo(){}
+
+    public Equipo(int id, int id_Creador,int categoria, String nombre, Date fecha_Creacion, Bitmap foto, boolean confirmado)
     {
-        private int id;
-        private int id_Creador;
-        private String nombre;
-        private Date fecha_Creacion;
-        private Byte[] foto;
-        private boolean confirmado;
+        this.id = id;
+        this.id_Creador = id_Creador;
+        this.nombre = nombre;
+        this.categoria=categoria;
+        this.fecha_Creacion = fecha_Creacion;
+        this.foto = foto;
+        this.confirmado = confirmado;
+    }
 
-        public Equipo(int id, int id_Creador, String nombre, Date fecha_Creacion, byte[] foto, boolean confirmado)
-        {
-            this.id = id;
-            this.id_Creador = id_Creador;
-            this.nombre = nombre;
-            this.fecha_Creacion = fecha_Creacion;
-            this.foto = foto;
-            this.confirmado = confirmado;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-            set
-            {
-                id = value;
-            }
-        }
+    public int getId_Creador() {
+        return id_Creador;
+    }
 
-        public int Id_Creador
-        {
-            get
-            {
-                return id_Creador;
-            }
+    public void setId_Creador(int id_Creador) {
+        this.id_Creador = id_Creador;
+    }
 
-            set
-            {
-                id_Creador = value;
-            }
-        }
+    public String getNombre() {
+        return nombre;
+    }
 
-        public string Nombre
-        {
-            get
-            {
-                return nombre;
-            }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-            set
-            {
-                nombre = value;
-            }
-        }
+    public Date getFecha_Creacion() {
+        return fecha_Creacion;
+    }
 
-        public DateTime Fecha_Creacion
-        {
-            get
-            {
-                return fecha_Creacion;
-            }
+    public void setFecha_Creacion(Date fecha_Creacion) {
+        this.fecha_Creacion = fecha_Creacion;
+    }
 
-            set
-            {
-                fecha_Creacion = value;
-            }
-        }
+    public Bitmap getFoto() {
+        return foto;
+    }
 
-        public byte[] Foto
-        {
-            get
-            {
-                return foto;
-            }
+    public void setFoto(Bitmap foto) {
+        this.foto = foto;
+    }
 
-            set
-            {
-                foto = value;
-            }
-        }
+    public boolean isConfirmado() {
+        return confirmado;
+    }
 
-        public bool Confirmado
-        {
-            get
-            {
-                return confirmado;
-            }
+    public void setConfirmado(boolean confirmado) {
+        this.confirmado = confirmado;
+    }
 
-            set
-            {
-                confirmado = value;
-            }
-        }
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 }

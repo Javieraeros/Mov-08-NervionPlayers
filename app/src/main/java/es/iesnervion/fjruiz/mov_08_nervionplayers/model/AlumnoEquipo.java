@@ -30,6 +30,30 @@ public class AlumnoEquipo
 
         //region Propiedades
 
+        public int getId_Alumno() {
+            return id_Alumno;
+        }
+
+        public void setId_Alumno(int id_Alumno) {
+            this.id_Alumno = id_Alumno;
+        }
+
+        public int getId_Equipo() {
+            return id_Equipo;
+        }
+
+        public void setId_Equipo(int id_Equipo) {
+            this.id_Equipo = id_Equipo;
+        }
+
+        public Date getFecha_Creacion() {
+            return fecha_Creacion;
+        }
+
+        public void setFecha_Creacion(Date fecha_Creacion) {
+            this.fecha_Creacion = fecha_Creacion;
+        }
+
         //endregion
 
 }
