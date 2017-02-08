@@ -1,4 +1,6 @@
-﻿/**************
+package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
+
+/**************
 * Restricciones
 * *************
 * ganados,empatados y perdidos>=0

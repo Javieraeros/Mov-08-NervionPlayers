@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mov-08-NervionPlayers</string>
+    <string name="app_name">NervionPlayers</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

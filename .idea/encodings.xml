@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/Alumno.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/AlumnoEquipo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/Deporte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/Duelo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/Equipo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/Partido.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/ResultadoDuelo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/es/iesnervion/fjruiz/mov_08_nervionplayers/model/ResultadoPartido.java" charset="UTF-8" />
+  </component>
+</project>

@@ -1,4 +1,6 @@
-﻿import android.graphics.Bitmap;
+package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
+
+import android.graphics.Bitmap;
 
 import java.util.Date;
 

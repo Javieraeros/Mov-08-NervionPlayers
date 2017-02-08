@@ -1,4 +1,4 @@
-﻿package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
+package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
 
 import java.util.Date;
 

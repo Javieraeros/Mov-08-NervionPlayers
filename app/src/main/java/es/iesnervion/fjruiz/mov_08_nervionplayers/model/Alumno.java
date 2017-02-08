@@ -1,4 +1,4 @@
-﻿package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
+package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
 
 import android.graphics.Bitmap;
 
@@ -21,7 +21,7 @@ public class Alumno
     private int id;
     private String nombre;
     private String apellidos;
-    private String contraseña;
+    private String password;
     private String alias;
     private String correo;
     private Date fecha_Creacion;
@@ -38,13 +38,13 @@ public class Alumno
     {
     }
 
-    public Alumno(int id, String nombre,String apellidos,String contraseña, String alias, String correo,
-        Date fecha_Creacion, Byte curso,String letra, String observaciones, boolean confirmado,Bitmap foto)
+    public Alumno(int id, String nombre, String apellidos, String password, String alias, String correo,
+                  Date fecha_Creacion, Byte curso, String letra, String observaciones, boolean confirmado, Bitmap foto)
     {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.contraseña = contraseña;
+        this.password = password;
         this.alias = alias;
         this.correo = correo;
         this.fecha_Creacion = fecha_Creacion;
@@ -83,12 +83,12 @@ public class Alumno
         this.apellidos = apellidos;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAlias() {
@@ -158,7 +158,7 @@ public class Alumno
 
     //endregion
 
-    //region Métodos
+    //region Metodos
 
     //endregion
 

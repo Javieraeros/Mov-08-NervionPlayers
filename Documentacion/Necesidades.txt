@@ -15,9 +15,9 @@ Para el registro del alumno será necesario:
 	-curso
 	-letra
 	-foto
-	-contraseña(Con restricciones)
+	-password(Con restricciones)
 
-Para el login, el usuario introducirá el correo o el alias y la contraseña, en caso de no ser válida, se volverá a la pantalla de error mostrando un mensaje.
+Para el login, el usuario introducirá el correo o el alias y la password, en caso de no ser válida, se volverá a la pantalla de error mostrando un mensaje.
 
 Añadiremos el uso de notificaciones, por lo que usaremos Firebase, además de implementar ciertos métodos en nuestra API para que así consigamos  que la susodicha
 nos envié las notificaciones a nuestro correo.
