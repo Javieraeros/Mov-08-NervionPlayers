@@ -13,10 +13,10 @@ public class MiRetrofit {
     private Retrofit miRetrofit;
     private RestInterface service;
     private Context miContexto;
-    private @BindString(R.string.nombreApi) String nombreApi;
+    @BindString(R.string.nombreApi) String nombreApi;
     public MiRetrofit(Context miContexto){
         this.miContexto=miContexto;
-        miRetrofit=new Retrofit.Builder().baseUrl(nombreApi)
+        miRetrofit=new Retrofit.Builder().baseUrl("https://cambiar.es")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

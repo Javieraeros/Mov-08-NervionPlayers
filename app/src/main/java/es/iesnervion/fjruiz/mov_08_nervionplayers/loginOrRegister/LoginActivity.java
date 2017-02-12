@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
@@ -116,7 +117,6 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
 
                 MiRetrofit mr=new MiRetrofit(this);
                 mr.getToken(basicAuth);
-
             }
         }
     }
@@ -130,21 +130,25 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        basicAuth= Base64.encodeToString(bAux,Base64.DEFAULT);
+        basicAuth="Basic "+Base64.encodeToString(bAux,Base64.DEFAULT);
+
         return basicAuth;
     }
 
 
     @Override
     public void getTokenAceptado(Response<Void> response) {
-        //TODO guardar token
+        //TODO guardar token y llamar a getAlumno(con el alias/correo)
         String auth=response.headers().get("Authorization");
 
     }
 
     @Override
-    public void getTokenRechazado() {
-
+    public void getTokenRechazado()   {
+        //TODO poner el fallo
+        showProgress(false);
+        isThreadRunning=false;
+        Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
     }
 
 

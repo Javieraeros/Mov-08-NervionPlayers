@@ -29,10 +29,12 @@ public class TokenCallback implements Callback<Void> {
     @Override
     public void onResponse(Call<Void> call, Response<Void> response) {
         //TODO recuperar cabecera Auth
+        enviador.getTokenAceptado(response);
     }
 
     @Override
     public void onFailure(Call<Void> call, Throwable t) {
         //TODO mostrar toast. Si falla esto es porque el usuario/contraseña no son correctos
+        enviador.getTokenRechazado();
     }
 }
