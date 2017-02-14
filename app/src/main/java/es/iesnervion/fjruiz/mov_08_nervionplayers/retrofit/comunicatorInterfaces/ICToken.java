@@ -1,4 +1,4 @@
-package es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit;
+package es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces;
 
 
 import retrofit2.Response;

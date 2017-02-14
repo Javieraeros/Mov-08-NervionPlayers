@@ -2,7 +2,7 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.callbacks;
 
 import android.content.Context;
 
-import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.ICToken;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,13 +28,11 @@ public class TokenCallback implements Callback<Void> {
 
     @Override
     public void onResponse(Call<Void> call, Response<Void> response) {
-        //TODO recuperar cabecera Auth
         enviador.getTokenAceptado(response);
     }
 
     @Override
     public void onFailure(Call<Void> call, Throwable t) {
-        //TODO mostrar toast. Si falla esto es porque el usuario/contraseña no son correctos
         enviador.getTokenRechazado();
     }
 }

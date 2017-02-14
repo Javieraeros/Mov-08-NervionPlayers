@@ -4,47 +4,41 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.notifications.MyFirebaseMessagingService;
-import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.ICToken;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICAlumno;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.restInterfaces.AlumnoInterface;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.AuthUtilities;
 import retrofit2.Response;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements ICToken {
-
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     * TODO: Preguntar onEditorActionListener
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+public class LoginActivity extends AppCompatActivity
+        implements ICToken, TextView.OnEditorActionListener,ICAlumno {
 
     private boolean isThreadRunning=false;
 
@@ -55,6 +49,11 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
     @BindView(R.id.login_form) View mLoginFormView;
     @BindView(R.id.sign_in_button) Button mEmailSignInButton;
     @BindView(R.id.register_button) Button mRegisterButton;
+    @BindString(R.string.fichero) String fichero;
+    private AuthUtilities authUtilities;
+    private MiRetrofit mr;
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +64,34 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
         //startService(new Intent(this, GetToken.class));
 
         ButterKnife.bind(this);
+        authUtilities=new AuthUtilities();
         //populateAutoComplete();
 
     }
+
+    /**
+     * Called when an action is being performed.
+     *
+     * @param v        The view that was clicked.
+     * @param actionId Identifier of the action.  This will be either the
+     *                 identifier you supplied, or {@link EditorInfo#IME_NULL
+     *                 EditorInfo.IME_NULL} if being called due to the enter key
+     *                 being pressed.
+     * @param event    If triggered by an enter key, this is the event;
+     *                 otherwise, this is null.
+     * @return Return true if you have consumed the action, else false.
+     */
+    @OnEditorAction(R.id.password)
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean devolver=false;
+        if (actionId == R.id.password || actionId == EditorInfo.IME_ACTION_DONE) {
+            loggear(v);
+            devolver= true;
+        }
+        return devolver;
+    }
+
 
 
     /**
@@ -83,8 +107,8 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
             mPasswordView.setError(null);
 
             // Store values at the time of the login attempt.
-            String email = mEmailNick.getText().toString();
-            String password = mPasswordView.getText().toString();
+            email = mEmailNick.getText().toString();
+            password = mPasswordView.getText().toString();
 
             boolean cancel = false;
             View focusView = null;
@@ -113,33 +137,21 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
                 showProgress(true);
                 isThreadRunning=true;
 
-                String basicAuth=creaBasicAuth(email,password);
+                String basicAuth=authUtilities.creaBasicAuth(email,password);
 
-                MiRetrofit mr=new MiRetrofit(this);
+                mr=new MiRetrofit(this);
                 mr.getToken(basicAuth);
             }
         }
     }
 
-    private String creaBasicAuth(String nombre,String password) {
-        String basicAuth="",aux;
-        byte[] bAux=null;
-        aux=nombre+":"+password;
-        try {
-            bAux=aux.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        basicAuth="Basic "+Base64.encodeToString(bAux,Base64.DEFAULT);
-
-        return basicAuth;
-    }
-
-
+    //region Respuestas Retrofit
     @Override
     public void getTokenAceptado(Response<Void> response) {
-        //TODO guardar token y llamar a getAlumno(con el alias/correo)
+        SharedPreferences sharedPreferences=getPreferences(MODE_PRIVATE);
         String auth=response.headers().get("Authorization");
+        sharedPreferences.edit().putString(fichero,auth).apply();
+        mr.getAlumno(email,password);
 
     }
 
@@ -152,11 +164,17 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
     }
 
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+    @Override
+    public void getAlumnoAceptado(Response<Alumno> response) {
+        //TODO Guardar en sharedPReferences y nuevo Intent
     }
 
+    @Override
+    public void getAlumnoRechazado() {
+        //TODO Mensajito de error
+    }
+
+    //endregion
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -193,6 +211,10 @@ public class LoginActivity extends AppCompatActivity implements ICToken {
         }
     }
 
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 4;
+    }
 
     //region Autocompletar email
     /*
