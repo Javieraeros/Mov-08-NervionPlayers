@@ -23,16 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name=".notifications.MyFirebaseMessagingService">
+
+        <service android:name=".notifications.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_announcement_white_24dp" />
-    </application>
 
+        <activity android:name=".loginOrRegister.RegisterActivity"></activity>
+    </application>
 
 </manifest>

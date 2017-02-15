@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -19,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,10 +26,10 @@ import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.notifications.MyFirebaseMessagingService;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICAlumno;
-import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.restInterfaces.AlumnoInterface;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.AuthUtilities;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.FilesUtilities;
 import retrofit2.Response;
 
 /**
@@ -49,11 +47,12 @@ public class LoginActivity extends AppCompatActivity
     @BindView(R.id.login_form) View mLoginFormView;
     @BindView(R.id.sign_in_button) Button mEmailSignInButton;
     @BindView(R.id.register_button) Button mRegisterButton;
-    @BindString(R.string.fichero) String fichero;
     private AuthUtilities authUtilities;
     private MiRetrofit mr;
     private String email;
     private String password;
+    private FilesUtilities miGuardador;
+    private int registerCode=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,10 @@ public class LoginActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
         authUtilities=new AuthUtilities();
+        miGuardador=new FilesUtilities(this);
         //populateAutoComplete();
+
+        Toast.makeText(this,miGuardador.loadAtuhorization(),Toast.LENGTH_SHORT).show();
 
     }
 
@@ -92,7 +94,12 @@ public class LoginActivity extends AppCompatActivity
         return devolver;
     }
 
-
+    @OnClick(R.id.register_button)
+    public void register(View v){
+        //TODO mirar examen
+        Intent registrar=new Intent(this,RegisterActivity.class);
+        startActivityForResult(registrar,registerCode);
+    }
 
     /**
      * Attempts to sign in .
@@ -148,16 +155,14 @@ public class LoginActivity extends AppCompatActivity
     //region Respuestas Retrofit
     @Override
     public void getTokenAceptado(Response<Void> response) {
-        SharedPreferences sharedPreferences=getPreferences(MODE_PRIVATE);
         String auth=response.headers().get("Authorization");
-        sharedPreferences.edit().putString(fichero,auth).apply();
-        mr.getAlumno(email,password);
+        miGuardador.saveAuthorization(auth);
+        mr.getAlumno(auth,email,password);
 
     }
 
     @Override
-    public void getTokenRechazado()   {
-        //TODO poner el fallo
+    public void getTokenRechazado(){
         showProgress(false);
         isThreadRunning=false;
         Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
@@ -166,12 +171,18 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void getAlumnoAceptado(Response<Alumno> response) {
-        //TODO Guardar en sharedPReferences y nuevo Intent
+        //TODO siguiente pantalla
+        miGuardador.saveAuthorization(response.headers().get("Authorization"));
+        showProgress(false);
+        isThreadRunning=false;
+        Alumno miAlumno=response.body();
+        miGuardador.saveAlumno(miAlumno);
+
     }
 
     @Override
     public void getAlumnoRechazado() {
-        //TODO Mensajito de error
+        Toast.makeText(this, "Ha ocurrido un error, lo sentimos", Toast.LENGTH_SHORT).show();
     }
 
     //endregion

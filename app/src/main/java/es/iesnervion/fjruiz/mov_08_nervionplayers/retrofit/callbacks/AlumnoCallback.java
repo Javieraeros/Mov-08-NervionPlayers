@@ -13,13 +13,13 @@ import retrofit2.Response;
  * Created by fjruiz on 14/02/17.
  */
 
-public class PersonaCallback implements Callback<Alumno> {
+public class AlumnoCallback implements Callback<Alumno> {
 
 
     private ICAlumno enviador;
     private Context miContexto;
 
-    public PersonaCallback(Context miContexto){
+    public AlumnoCallback(Context miContexto){
         this.miContexto=miContexto;
         if (miContexto instanceof ICAlumno) {
             enviador = (ICAlumno) miContexto;

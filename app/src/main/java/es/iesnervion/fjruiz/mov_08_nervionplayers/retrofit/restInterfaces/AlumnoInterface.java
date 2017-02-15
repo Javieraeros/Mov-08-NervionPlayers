@@ -7,12 +7,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 
-/**
- * Created by fjruiz on 14/02/17.
- */
-
 public interface AlumnoInterface {
     //Todo cambiar
     @GET("api/Alumno")
-    Call<Alumno> getAlumno(@Header("Authorization") String auth);
+    Call<Alumno> getAlumno(@Header("Authorization") String auth,String correo,String password);
 }

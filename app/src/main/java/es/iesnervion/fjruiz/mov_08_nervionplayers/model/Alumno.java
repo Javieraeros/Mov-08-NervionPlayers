@@ -1,7 +1,10 @@
 package es.iesnervion.fjruiz.mov_08_nervionplayers.model;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /***************
@@ -15,7 +18,7 @@ import java.util.Date;
  * Letra<=10
  * No se insertará en BBDD las fecha de Creación
  */
-public class Alumno
+public class Alumno implements Parcelable,Serializable
 {
     //region Atributos
     private int id;
@@ -155,11 +158,100 @@ public class Alumno
         this.foto = foto;
     }
 
-
     //endregion
 
     //region Metodos
 
+    //TODO cambiar si eso
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Alumno alumno = (Alumno) o;
+
+        if (id != alumno.id) return false;
+        if (confirmado != alumno.confirmado) return false;
+        if (nombre != null ? !nombre.equals(alumno.nombre) : alumno.nombre != null) return false;
+        if (apellidos != null ? !apellidos.equals(alumno.apellidos) : alumno.apellidos != null)
+            return false;
+        if (password != null ? !password.equals(alumno.password) : alumno.password != null)
+            return false;
+        if (alias != null ? !alias.equals(alumno.alias) : alumno.alias != null) return false;
+        if (correo != null ? !correo.equals(alumno.correo) : alumno.correo != null) return false;
+        if (fecha_Creacion != null ? !fecha_Creacion.equals(alumno.fecha_Creacion) : alumno.fecha_Creacion != null)
+            return false;
+        if (curso != null ? !curso.equals(alumno.curso) : alumno.curso != null) return false;
+        if (letra != null ? !letra.equals(alumno.letra) : alumno.letra != null) return false;
+        if (observaciones != null ? !observaciones.equals(alumno.observaciones) : alumno.observaciones != null)
+            return false;
+        return foto != null ? foto.equals(alumno.foto) : alumno.foto == null;
+
+    }
+
+    protected Alumno(Parcel in) {
+        id = in.readInt();
+        nombre = in.readString();
+        apellidos = in.readString();
+        password = in.readString();
+        alias = in.readString();
+        correo = in.readString();
+        letra = in.readString();
+        observaciones = in.readString();
+        confirmado = in.readByte() != 0;
+        foto = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    public static final Creator<Alumno> CREATOR = new Creator<Alumno>() {
+        @Override
+        public Alumno createFromParcel(Parcel in) {
+            return new Alumno(in);
+        }
+
+        @Override
+        public Alumno[] newArray(int size) {
+            return new Alumno[size];
+        }
+    };
+
+
+    /**
+     * Describe the kinds of special objects contained in this Parcelable
+     * instance's marshaled representation. For example, if the object will
+     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
+     * the return value of this method must include the
+     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
+     *
+     * @return a bitmask indicating the set of special object types marshaled
+     * by this Parcelable object instance.
+     * @see #CONTENTS_FILE_DESCRIPTOR
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(nombre);
+        dest.writeString(apellidos);
+        dest.writeString(password);
+        dest.writeString(alias);
+        dest.writeString(correo);
+        dest.writeString(letra);
+        dest.writeString(observaciones);
+        dest.writeByte((byte) (confirmado ? 1 : 0));
+        dest.writeParcelable(foto, flags);
+    }
     //endregion
 
 }
