@@ -25,7 +25,6 @@ import butterknife.OnEditorAction;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.notifications.MyFirebaseMessagingService;
-import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICAlumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.AuthUtilities;
@@ -36,7 +35,7 @@ import retrofit2.Response;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity
-        implements ICToken, TextView.OnEditorActionListener,ICAlumno {
+        implements ICToken, TextView.OnEditorActionListener {
 
     private boolean isThreadRunning=false;
 
@@ -154,10 +153,12 @@ public class LoginActivity extends AppCompatActivity
 
     //region Respuestas Retrofit
     @Override
-    public void getTokenAceptado(Response<Void> response) {
+    public void getTokenAceptado(Response<Alumno> response) {
         String auth=response.headers().get("Authorization");
         miGuardador.saveAuthorization(auth);
-        mr.getAlumno(auth,email,password);
+
+        Alumno miAlumno=response.body();
+        //mr.getAlumno(auth,email,password);
 
     }
 
@@ -168,10 +169,10 @@ public class LoginActivity extends AppCompatActivity
         Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
     }
 
-
+    /*
+    Ya no es necesario puesto que la API nos devuelve el alumno en el cuerpo
     @Override
     public void getAlumnoAceptado(Response<Alumno> response) {
-        //TODO siguiente pantalla
         miGuardador.saveAuthorization(response.headers().get("Authorization"));
         showProgress(false);
         isThreadRunning=false;
@@ -184,7 +185,7 @@ public class LoginActivity extends AppCompatActivity
     public void getAlumnoRechazado() {
         Toast.makeText(this, "Ha ocurrido un error, lo sentimos", Toast.LENGTH_SHORT).show();
     }
-
+    */
     //endregion
     /**
      * Shows the progress UI and hides the login form.

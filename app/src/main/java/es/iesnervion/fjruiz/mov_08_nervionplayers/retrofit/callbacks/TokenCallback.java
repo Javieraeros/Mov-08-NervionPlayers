@@ -2,6 +2,7 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.callbacks;
 
 import android.content.Context;
 
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,7 +12,7 @@ import retrofit2.Response;
  * Created by javi on 12/02/17.
  */
 
-public class TokenCallback implements Callback<Void> {
+public class TokenCallback implements Callback<Alumno> {
 
     private ICToken enviador;
     private Context miContexto;
@@ -27,12 +28,12 @@ public class TokenCallback implements Callback<Void> {
     }
 
     @Override
-    public void onResponse(Call<Void> call, Response<Void> response) {
+    public void onResponse(Call<Alumno> call, Response<Alumno> response) {
         enviador.getTokenAceptado(response);
     }
 
     @Override
-    public void onFailure(Call<Void> call, Throwable t) {
+    public void onFailure(Call<Alumno> call, Throwable t) {
         enviador.getTokenRechazado();
     }
 }

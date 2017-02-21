@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MiRetrofit {
     private Retrofit miRetrofit;
     private Context miContexto;
+    //TODO CAmbiar cadena
     @BindString(R.string.nombreApi) String nombreApi;
     public MiRetrofit(Context miContexto){
         this.miContexto=miContexto;
