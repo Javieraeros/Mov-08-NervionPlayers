@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity
         implements ICToken, TextView.OnEditorActionListener {
 
     private boolean isThreadRunning=false;
+    static final int resultado_Registro=0;
+    static final String bundle_Alumno="RegistroAlumno";
 
     //No pongo private para que se puedan acceder desde otras clases de este package
     @BindView(R.id.email_nick) AutoCompleteTextView mEmailNick;
@@ -151,6 +153,17 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (requestCode){
+            case resultado_Registro:
+                if(resultCode==RESULT_OK){
+                    Alumno alumnoRegistrar=data.getParcelableExtra(bundle_Alumno);
+                    //TODO PostAlumno
+                }
+                break;
+        }
+    }
     //region Respuestas Retrofit
     @Override
     public void getTokenAceptado(Response<Alumno> response) {
