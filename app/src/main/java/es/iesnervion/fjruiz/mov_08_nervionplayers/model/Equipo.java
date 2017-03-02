@@ -9,6 +9,7 @@ public class Equipo
     private int id;
     private int id_Creador;
     private int categoria;
+    private int id_Deporte;
     private String nombre;
     private Date fecha_Creacion;
     private Bitmap foto;
@@ -16,10 +17,11 @@ public class Equipo
 
     public Equipo(){}
 
-    public Equipo(int id, int id_Creador,int categoria, String nombre, Date fecha_Creacion, Bitmap foto, boolean confirmado)
+    public Equipo(int id, int id_Creador,int categoria,int id_Deporte, String nombre, Date fecha_Creacion, Bitmap foto, boolean confirmado)
     {
         this.id = id;
         this.id_Creador = id_Creador;
+        this.id_Deporte=id_Deporte;
         this.nombre = nombre;
         this.categoria=categoria;
         this.fecha_Creacion = fecha_Creacion;
@@ -41,6 +43,14 @@ public class Equipo
 
     public void setId_Creador(int id_Creador) {
         this.id_Creador = id_Creador;
+    }
+
+    public int getId_Deporte() {
+        return id_Deporte;
+    }
+
+    public void setId_Deporte(int id_Deporte) {
+        this.id_Deporte = id_Deporte;
     }
 
     public String getNombre() {

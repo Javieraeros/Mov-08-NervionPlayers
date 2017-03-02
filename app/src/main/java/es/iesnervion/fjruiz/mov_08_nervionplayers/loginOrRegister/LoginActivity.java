@@ -3,6 +3,7 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.loginOrRegister;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -30,6 +31,8 @@ import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.AuthUtilities;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.FilesUtilities;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * A login screen that offers login via email/password.
@@ -64,12 +67,22 @@ public class LoginActivity extends AppCompatActivity
         //startService(new Intent(this, GetToken.class));
 
         ButterKnife.bind(this);
+        //TODO añadir a todas las actividades!
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("badseed.ttf")
+                .build());
+
         authUtilities=new AuthUtilities();
         miGuardador=new FilesUtilities(this);
         //populateAutoComplete();
 
-        Toast.makeText(this,miGuardador.loadAtuhorization(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,miGuardador.loadAtuhorization(),Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     /**

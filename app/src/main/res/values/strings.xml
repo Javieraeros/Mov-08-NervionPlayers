@@ -18,4 +18,13 @@
     <string name="nombreApi">https://cambiar.es</string>
     <string name="fichero">fjruiz.nervionplayers.fichero</string>
     <string name="alias">Alias</string>
+    <string name="Password">Contraseña</string>
+    <string name="Password2">Repite Contraseña</string>
+    <string name="name">Nombre</string>
+    <string name="subname">Apellidos</string>
+    <string name="email">Correo</string>
+    <string name="year">Curso</string>
+    <string name="letter">Letra</string>
+    <string name="image">Foto</string>
+    <string name="accept">Aceptar</string>
 </resources>
