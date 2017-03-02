@@ -35,10 +35,18 @@ public class FilesUtilities {
         sharedPreferences=contexto.getSharedPreferences(fichero,MODE_PRIVATE);
     }
 
+    /**
+     * Método que guarda el token en shared preferences
+     * @param auth
+     */
     public void saveAuthorization(String auth){
         sharedPreferences.edit().putString(authKey,auth).apply();
     }
 
+    /**
+     * Método que recupera el token de shared preferences
+     * @return token or null
+     */
     public String loadAtuhorization(){
         return sharedPreferences.getString(authKey,null);
     }

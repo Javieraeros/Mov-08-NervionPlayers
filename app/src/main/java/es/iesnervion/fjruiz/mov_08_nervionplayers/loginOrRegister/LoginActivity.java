@@ -60,6 +60,14 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+        Necesario poner antes del onCreate para que la primera vez que se inicia la aplicación
+        se cargue bien la fuente
+         */
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("badseed.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -67,10 +75,6 @@ public class LoginActivity extends AppCompatActivity
         //startService(new Intent(this, GetToken.class));
 
         ButterKnife.bind(this);
-        //TODO añadir a todas las actividades!
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("badseed.ttf")
-                .build());
 
         authUtilities=new AuthUtilities();
         miGuardador=new FilesUtilities(this);
@@ -78,11 +82,23 @@ public class LoginActivity extends AppCompatActivity
 
         //Toast.makeText(this,miGuardador.loadAtuhorization(),Toast.LENGTH_SHORT).show();
 
+        if(miGuardador.loadAtuhorization()!=null){
+            iniciaAlumnoActivity();
+        }
     }
 
+    /**
+     * Necesario para Calligraphy
+     * @param newBase
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void iniciaAlumnoActivity(){
+        Intent alumnoActivity=new Intent(this,AlumnoActivity.class);
+        startActivity(alumnoActivity);
     }
 
     /**
@@ -160,10 +176,18 @@ public class LoginActivity extends AppCompatActivity
 
                 String basicAuth=authUtilities.creaBasicAuth(email,password);
 
-                mr=new MiRetrofit(this);
-                mr.getToken(basicAuth);
+                //TODO cambiar
+                /*mr=new MiRetrofit(this);
+                mr.getToken(basicAuth);*/
+                showProgress(false);
+                isThreadRunning=false;
+                iniciaAlumnoActivity();
             }
         }
+    }
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 
     @Override
@@ -180,12 +204,13 @@ public class LoginActivity extends AppCompatActivity
     //region Respuestas Retrofit
     @Override
     public void getTokenAceptado(Response<Alumno> response) {
+        isThreadRunning=false;
         String auth=response.headers().get("Authorization");
         miGuardador.saveAuthorization(auth);
 
         Alumno miAlumno=response.body();
-        //mr.getAlumno(auth,email,password);
-
+        miGuardador.saveAlumno(miAlumno);
+        iniciaAlumnoActivity();
     }
 
     @Override
@@ -195,24 +220,6 @@ public class LoginActivity extends AppCompatActivity
         Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
     }
 
-    /*
-    Ya no es necesario puesto que la API nos devuelve el alumno en el cuerpo
-    @Override
-    public void getAlumnoAceptado(Response<Alumno> response) {
-        miGuardador.saveAuthorization(response.headers().get("Authorization"));
-        showProgress(false);
-        isThreadRunning=false;
-        Alumno miAlumno=response.body();
-        miGuardador.saveAlumno(miAlumno);
-
-    }
-
-    @Override
-    public void getAlumnoRechazado() {
-        Toast.makeText(this, "Ha ocurrido un error, lo sentimos", Toast.LENGTH_SHORT).show();
-    }
-    */
-    //endregion
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -253,6 +260,26 @@ public class LoginActivity extends AppCompatActivity
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
+
+    /*
+    Ya no es necesario puesto que la API nos devuelve el alumno en el cuerpo
+    @Override
+    public void getAlumnoAceptado(Response<Alumno> response) {
+        miGuardador.saveAuthorization(response.headers().get("Authorization"));
+        showProgress(false);
+        isThreadRunning=false;
+        Alumno miAlumno=response.body();
+        miGuardador.saveAlumno(miAlumno);
+
+    }
+
+    @Override
+    public void getAlumnoRechazado() {
+        Toast.makeText(this, "Ha ocurrido un error, lo sentimos", Toast.LENGTH_SHORT).show();
+    }
+    */
+    //endregion
+
 
     //region Autocompletar email
     /*
