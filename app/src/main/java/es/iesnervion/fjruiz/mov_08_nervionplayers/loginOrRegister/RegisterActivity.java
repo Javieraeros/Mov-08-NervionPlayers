@@ -9,11 +9,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,21 +32,22 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class RegisterActivity extends AppCompatActivity{
     private final int registerCode=0;
     private final int PICK_IMAGE_REQUEST=1;
+    private String[] cadenasSpinner={"1º ESO","2º ESO","3º ESO","4º ESO","1º Bach","2º Bach","1º Ciclo","2º Ciclo"};
     @BindView(R.id.ibFoto)ImageButton foto;
-    @BindView(R.id.lblFoto) TextView lblFoto;
-    @BindView(R.id.lblAlias) TextView lblAlias;
-    @BindView(R.id.lblPass) TextView lblPass;
-    @BindView(R.id.lblPass2) TextView lblPass2;
-    @BindView(R.id.lblNombre) TextView lblNombre;
-    @BindView(R.id.lblApellidos) TextView lblApellidos;
-    @BindView(R.id.lblCorreo) TextView lblCorreo;
-    @BindView(R.id.lblCurso) TextView lblCurso;
-    @BindView(R.id.lblLetra) TextView lblLetra;
+    @BindView(R.id.txtAlias) EditText txtAlias;
+    @BindView(R.id.txtPass) EditText txtPass;
+    @BindView(R.id.txtPass2) EditText txtPass2;
+    @BindView(R.id.txtnombre) EditText txtNombre;
+    @BindView(R.id.txtApellidos) EditText txtApellidos;
+    @BindView(R.id.txtCorreo) EditText txtCorreo;
+    @BindView(R.id.spnCurso) Spinner spnCurso;
+    @BindView(R.id.txtLetra) EditText txtLetra;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        spnCurso.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cadenasSpinner));
     }
 
     @Override
@@ -69,9 +76,21 @@ public class RegisterActivity extends AppCompatActivity{
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                // Log.d(TAG, String.valueOf(bitmap));
 
                 foto.setImageBitmap(bitmap);
+                int size     = bitmap.getRowBytes() * bitmap.getHeight();
+                ByteBuffer b = ByteBuffer.allocate(size);
+
+                bitmap.copyPixelsToBuffer(b);
+
+                byte[] bytes = new byte[size];
+
+                try {
+                    b.get(bytes, 0, bytes.length);
+                } catch (BufferUnderflowException e) {
+                    // always happens
+                }
+                // do something with byte[]
             } catch (IOException e) {
                 e.printStackTrace();
             }
