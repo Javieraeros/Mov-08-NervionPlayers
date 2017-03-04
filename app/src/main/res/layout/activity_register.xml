@@ -9,10 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.fjruiz.mov_08_nervionplayers.loginOrRegister.RegisterActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <!--Form-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +27,7 @@
             <ImageButton
                 android:id="@+id/ibFoto"
                 android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
                 android:layout_width="150sp"
                 android:layout_height="150sp"
                 android:scaleType="fitCenter"
@@ -122,7 +119,8 @@
                     android:id="@+id/txtnombre"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    />
             </LinearLayout>
 
 
@@ -164,6 +162,7 @@
 
                 <EditText
                     android:id="@+id/txtCorreo"
+                    android:inputType="textEmailAddress"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -182,13 +181,13 @@
                     android:text="@string/year"
                     android:gravity="center_vertical"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="15"
                     android:layout_height="match_parent" />
 
                 <Spinner
                     android:id="@+id/spnCurso"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="30"
                     android:layout_height="match_parent" />
 
 
@@ -197,14 +196,13 @@
                     android:text="@string/letter"
                     android:gravity="center_vertical"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="15"
                     android:layout_height="match_parent" />
 
                 <EditText
                     android:id="@+id/txtLetra"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:minWidth="20sp"
+                    android:layout_weight="15"
                     android:layout_height="match_parent" />
 
             </LinearLayout>
@@ -218,5 +216,4 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
 </ScrollView>

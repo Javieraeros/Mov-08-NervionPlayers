@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity
     private String email;
     private String password;
     private FilesUtilities miGuardador;
-    private int registerCode=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +127,7 @@ public class LoginActivity extends AppCompatActivity
     public void register(View v){
         //TODO mirar examen
         Intent registrar=new Intent(this,RegisterActivity.class);
-        startActivityForResult(registrar,registerCode);
+        startActivityForResult(registrar,resultado_Registro);
     }
 
     /**
@@ -197,6 +196,7 @@ public class LoginActivity extends AppCompatActivity
                 if(resultCode==RESULT_OK){
                     Alumno alumnoRegistrar=data.getParcelableExtra(bundle_Alumno);
                     //TODO PostAlumno
+                    Toast.makeText(this, "El Alumno ha llegado", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
