@@ -26,6 +26,7 @@ import butterknife.OnEditorAction;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.notifications.MyFirebaseMessagingService;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICAlumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.utilidades.AuthUtilities;
@@ -37,11 +38,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * A login screen that offers login via email/password.
  */
+//TODO eliminar todo lo que tenga que ver con authorization si no está implementada en la API
 public class LoginActivity extends AppCompatActivity
-        implements ICToken, TextView.OnEditorActionListener {
+        implements ICToken, TextView.OnEditorActionListener,ICAlumno {
 
     private boolean isThreadRunning=false;
-    static final int resultado_Registro=0;
+    static final int REGISTER_REQUEST =24;
     static final String bundle_Alumno="RegistroAlumno";
 
     //No pongo private para que se puedan acceder desde otras clases de este package
@@ -127,7 +129,7 @@ public class LoginActivity extends AppCompatActivity
     public void register(View v){
         //TODO mirar examen
         Intent registrar=new Intent(this,RegisterActivity.class);
-        startActivityForResult(registrar,resultado_Registro);
+        startActivityForResult(registrar, REGISTER_REQUEST);
     }
 
     /**
@@ -191,12 +193,16 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
         switch (requestCode){
-            case resultado_Registro:
-                if(resultCode==RESULT_OK){
+            case REGISTER_REQUEST:
+                if(resultCode==2){
+                    showProgress(true);
+                    isThreadRunning=true;
                     Alumno alumnoRegistrar=data.getParcelableExtra(bundle_Alumno);
                     //TODO PostAlumno
-                    Toast.makeText(this, "El Alumno ha llegado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "El Alumno ha llegado "+alumnoRegistrar.getNombre(), Toast.LENGTH_SHORT).show();
+                    //mr.postAlumno(alumnoRegistrar);
                 }
                 break;
         }
@@ -219,7 +225,26 @@ public class LoginActivity extends AppCompatActivity
         isThreadRunning=false;
         Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
     }
+    @Override
+    public void postAlumnoAceptado(Response<Alumno> response) {
+        isThreadRunning=false;
+        String auth=response.headers().get("Authorization");
+        miGuardador.saveAuthorization(auth);
 
+        Alumno miAlumno=response.body();
+        miGuardador.saveAlumno(miAlumno);
+        showProgress(false);
+        iniciaAlumnoActivity();
+    }
+
+    @Override
+    public void postAlumnoRechazado() {
+        isThreadRunning=false;
+        showProgress(false);
+        Toast.makeText(this, "Algo ha fallado, vuelve a intentarlo", Toast.LENGTH_SHORT).show();
+    }
+
+    //endregion
     /**
      * Shows the progress UI and hides the login form.
      */
