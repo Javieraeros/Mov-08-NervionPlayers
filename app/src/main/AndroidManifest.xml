@@ -36,7 +36,7 @@
 
         <activity android:name=".loginOrRegister.RegisterActivity" />
         <activity
-            android:name=".loginOrRegister.AlumnoActivity"
+            android:name=".principal.AlumnoActivity"
             android:label="@string/title_activity_alumno"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

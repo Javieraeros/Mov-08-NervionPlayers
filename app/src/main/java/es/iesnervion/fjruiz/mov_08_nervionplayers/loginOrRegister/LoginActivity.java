@@ -26,6 +26,7 @@ import butterknife.OnEditorAction;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Alumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.notifications.MyFirebaseMessagingService;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.AlumnoActivity;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICAlumno;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.comunicatorInterfaces.ICToken;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.retrofit.MiRetrofit;

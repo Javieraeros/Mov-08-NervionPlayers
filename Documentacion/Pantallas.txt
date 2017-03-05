@@ -1,0 +1,25 @@
+Nuestra aplicación contrará con muchas pantallas,sin embargo podemos dividirlas en 3 bloques.
+	-Pantalla de registro
+	-Pantalla de loggeo
+	-Pantalla general
+En la pantalla de registro estarán lso elementos necesarios para el registro de un nuevo alumno en nuestro servidor.
+
+La pantalla de loggeo contará con dos campos de texto, uno para el alias/correo y otro para la contarseña.
+
+En la pantalla general, contaremos con un navigation view que nos permitirá deslizarnos entre las diferentes posibilidades:
+	-El alumno se añade a un deporte(si el deporte es grupal tendrá que añadirse a un grupo, o crearlo)
+	-Ver los grupos a los que pertenece el alumno(editar o eliminarse)
+	-Ver los duelos y partidos que tenga
+	-Modificar sus datos
+
+En la pantalla principal de la parte general, podremos ver un listado con todos los deportes en lo que un alumno está, al pinchar sobre él nos saldrá
+un menú emergente dandonos la posibilidad de editar algún dato, o bien, quitarse de ese deporte (en caso de que sea individual) pedir confirmación
+
+Cuando vayamos a la vista de grupos, tendremos un lsitado con todos los equipos a los que pertenece el alumno. Pinchando sobre un grupo, podremos ver la información
+y si dejamos pulsado podremos salir del grupo (pedir confirmación)
+
+En la vista de duelos/partidos nos mostrará todos los duelos/partidos de un alumno, la pinchar sobre ello veremos más información sobre los mismos
+
+Cuando vayamos a modificar los datos, hacer como en el examen, una pantalla que lso muestre y si le damos a un switch, que nos permita editarlos
+	
+

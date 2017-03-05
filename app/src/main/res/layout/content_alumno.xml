@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="es.iesnervion.fjruiz.mov_08_nervionplayers.loginOrRegister.AlumnoActivity"
+    tools:context="es.iesnervion.fjruiz.mov_08_nervionplayers.principal.AlumnoActivity"
     tools:showIn="@layout/app_bar_alumno">
 
 </FrameLayout>

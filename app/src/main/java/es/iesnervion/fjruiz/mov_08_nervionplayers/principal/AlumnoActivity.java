@@ -1,4 +1,4 @@
-package es.iesnervion.fjruiz.mov_08_nervionplayers.loginOrRegister;
+package es.iesnervion.fjruiz.mov_08_nervionplayers.principal;
 
 import android.content.Context;
 import android.content.Intent;
