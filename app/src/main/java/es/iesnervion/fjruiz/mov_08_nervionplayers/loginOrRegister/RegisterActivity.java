@@ -79,16 +79,14 @@ public class RegisterActivity extends AppCompatActivity{
         //Toast.makeText(getApplicationContext(),"image clicked",Toast.LENGTH_SHORT).show();
 
         //Imagen galería
-        /*Intent intent = new Intent();
-        // Show only images, no videos or anything else
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
 
         //Foto
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, PICK_IMAGE_REQUEST);
+        /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, PICK_IMAGE_REQUEST);*/
     }
 
     //FIXME
@@ -103,42 +101,40 @@ public class RegisterActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //foto
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK ) {
-            //&& data != null && data.getData() != null
-            //Uri uri = data.getData();
-
+        /*if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK ) {
             Bitmap bitmap = null;
-            //try {
-                //bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                bitmap = (Bitmap) data.getExtras().get("data");
-                foto.setImageBitmap(bitmap);
-                fotoSeleccionada=true;
-                int size = bitmap.getRowBytes() * bitmap.getHeight();
-                ByteBuffer byteBuffer = ByteBuffer.allocate(size);
-                bitmap.copyPixelsToBuffer(byteBuffer);
-                imagen = byteBuffer.array();
-            /*} catch (IOException e) {
-                e.printStackTrace();
-            }*/
-        }
+            bitmap = (Bitmap) data.getExtras().get("data");
+            foto.setImageBitmap(bitmap);
+            fotoSeleccionada=true;
+
+
+            int size = bitmap.getWidth() * bitmap.getHeight();
+            ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+            bitmap.copyPixelsToBuffer(byteBuffer);
+            imagen = byteBuffer.array();
+        }*/
 
         //Imagen galería
-        /*if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
 
             Bitmap bitmap = null;
             try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            foto.setImageBitmap(bitmap);
-            fotoSeleccionada=true;
-            int size = bitmap.getRowBytes() * bitmap.getHeight();
-            ByteBuffer byteBuffer = ByteBuffer.allocate(size);
-            bitmap.copyPixelsToBuffer(byteBuffer);
-            imagen = byteBuffer.array();
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                //reescalado de imagen
+                bitmap=Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                foto.setImageBitmap(bitmap);
+                fotoSeleccionada=true;
+
+
+                int size = bitmap.getRowBytes() * bitmap.getHeight();
+                ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+                bitmap.copyPixelsToBuffer(byteBuffer);
+                imagen = byteBuffer.array();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     @OnClick(R.id.btnAceptar)
@@ -180,11 +176,6 @@ public class RegisterActivity extends AppCompatActivity{
             Intent returnIntent = new Intent();
             returnIntent.putExtra(LoginActivity.bundle_Alumno, (Parcelable) miAlumno);
             setResult(2,returnIntent);
-            //FixMe Cuando le doy a aceptar no ahce nada
-            /*
-            Esto se debe a que creo un intent para recoger la foto, y creo que eso es lo que hace
-            que falle.
-             */
             finish();
         }
     }
