@@ -1,11 +1,8 @@
 package es.iesnervion.fjruiz.mov_08_nervionplayers.principal;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,37 +12,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments.EncuentrosFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AlumnoActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.nav_view) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumno);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -92,22 +82,37 @@ public class AlumnoActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id){
+            case R.id.nav_partidos:
 
-        } else if (id == R.id.nav_slideshow) {
+                EncuentrosFragment reto4Fragment = new EncuentrosFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        } else if (id == R.id.nav_manage) {
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.content_alumno, reto4Fragment);
+                transaction.addToBackStack(null);
 
-        } else if (id == R.id.nav_share) {
+                // Commit the transaction
+                transaction.commit();
+                break;
+            case R.id.nav_aniadir:
 
-        } else if (id == R.id.nav_send) {
+                break;
+            case R.id.nav_Grupos:
 
+                break;
+            case R.id.nav_partidos_jugados:
+
+                break;
+            case R.id.nav_user:
+
+                break;
+            case R.id.nav_exit:
+
+                break;
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return  true;
     }
 }

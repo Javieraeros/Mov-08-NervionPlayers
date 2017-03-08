@@ -33,4 +33,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="partidos_a_jugar">Partidos a jugar</string>
+    <string name="nuevo_deporte">Nuevo Deporte</string>
+    <string name="ver_grupos">Ver Grupos</string>
+    <string name="editar_usuario">Editar Usuario</string>
+    <string name="partidos_anteriores">Partidos Anteriores</string>
+    <string name="opciones">Opciones</string>
+    <string name="salir">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
