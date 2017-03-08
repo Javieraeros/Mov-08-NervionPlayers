@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 import java.util.Date;
 
-public class Partido extends Encuentro
+public class Partido implements Encuentro
     {
         //region Atributos
 

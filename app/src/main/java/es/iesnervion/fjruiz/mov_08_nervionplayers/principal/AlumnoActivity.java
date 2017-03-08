@@ -17,7 +17,12 @@ import butterknife.ButterKnife;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments.EncuentrosFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+//TODO
 
+/**
+ * Intentar usar expresiones lambda para pasarle por parametros a cada uno de los fragments
+ * lo que queremos que pase cuando algo pasa en los fragments
+ */
 public class AlumnoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 

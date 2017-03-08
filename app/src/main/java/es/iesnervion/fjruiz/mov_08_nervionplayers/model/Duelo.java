@@ -11,7 +11,7 @@ import java.util.Date;
 * No se insertará en BBDD las fecha de Creación
 * 
 */
-public class Duelo extends Encuentro
+public class Duelo implements Encuentro
 {
     //region Atributos
     private int id;
