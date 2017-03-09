@@ -2,31 +2,34 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
-import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments.DummyContent.DummyItem;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Encuentro;
 
 
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link //OnListFragmentInteractionListener}
  * interface.
  */
-public class EncuentrosFragment extends Fragment {
+public class EncuentrosFragment extends ListFragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private Runnable miFuncion;
+    private ArrayList<Encuentro> encuentros;
+    private Encuentro[] arrayEncuentros;
+    public static final String CADENA_FUNCION="mifuncioncita";
+    public static final String CADENA_ENCUENTROS="misencuentros";
+    //private OnListFragmentInteractionListener mListener;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,7 +43,10 @@ public class EncuentrosFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            miFuncion = getArguments().getParcelable(CADENA_FUNCION);
+            encuentros=getArguments().getParcelableArrayList(CADENA_ENCUENTROS);
+            arrayEncuentros=new Encuentro[encuentros.size()];
+            encuentros.toArray(arrayEncuentros);
         }
     }
 
@@ -50,16 +56,9 @@ public class EncuentrosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_encuentros_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyEncuentrosRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+
+        ViewAdapter miVA=new ViewAdapter(getContext(),R.layout.row,R.id.equipo1,arrayEncuentros);
+        setListAdapter(miVA);
         return view;
     }
 
@@ -67,18 +66,18 @@ public class EncuentrosFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
+        /*if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        //mListener = null;
     }
 
     /**
@@ -91,8 +90,19 @@ public class EncuentrosFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+    /*
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
+    }*/
+
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        try {
+            miFuncion.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

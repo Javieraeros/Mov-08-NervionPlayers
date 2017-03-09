@@ -2,29 +2,27 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
+import butterknife.BindView;
 
-/**
- * Created by javi on 8/03/17.
- */
+public class ViewHolder {
+    private TextView equipo1;
+    private TextView equipo2;
 
-public class ViewHolder extends RecyclerView.ViewHolder {
-    private final View mView;
-    private final TextView mIdView;
-    private final TextView mContentView;
-    private DummyContent.DummyItem mItem;
+    public ViewHolder(){};
 
-    public ViewHolder(View view) {
-        super(view);
-        mView = view;
-        mIdView = (TextView) view.findViewById(R.id.id);
-        mContentView = (TextView) view.findViewById(R.id.content);
+    public ViewHolder(View row,int equipo1, int equipo2) {
+        this.equipo1=(TextView) row.findViewById(equipo1);
+        this.equipo2=(TextView) row.findViewById(equipo2);
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " '" + mContentView.getText() + "'";
+    public TextView getEquipo1() {
+        return equipo1;
+    }
+
+    public TextView getEquipo2() {
+        return equipo2;
     }
 }

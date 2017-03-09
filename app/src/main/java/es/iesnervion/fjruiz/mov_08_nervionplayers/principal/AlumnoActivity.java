@@ -2,6 +2,8 @@ package es.iesnervion.fjruiz.mov_08_nervionplayers.principal;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,10 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Duelo;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Encuentro;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Partido;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.submodel.DueloNombre;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.model.submodel.PartidoNombre;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.fragments.EncuentrosFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 //TODO
@@ -90,13 +100,20 @@ public class AlumnoActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_partidos:
 
-                EncuentrosFragment reto4Fragment = new EncuentrosFragment();
+                EncuentrosFragment encuentrosFragment = new EncuentrosFragment();
+                Bundle datos=new Bundle();
+                //TODO recuperar de servidor
+                ArrayList<Encuentro> encuentros=generaEncuentros();
+                datos.putParcelableArrayList(EncuentrosFragment.CADENA_ENCUENTROS,encuentros);
+                datos.putParcelable(EncuentrosFragment.CADENA_FUNCION,new miFuncion());
+                encuentrosFragment.setArguments(datos);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.content_alumno, reto4Fragment);
+                transaction.replace(R.id.content_alumno, encuentrosFragment);
                 transaction.addToBackStack(null);
+
 
                 // Commit the transaction
                 transaction.commit();
@@ -119,5 +136,60 @@ public class AlumnoActivity extends AppCompatActivity
         }
         drawer.closeDrawer(GravityCompat.START);
         return  true;
+    }
+
+    private ArrayList<Encuentro> generaEncuentros() {
+        ArrayList<Encuentro> encuentro=new ArrayList<>();
+        Partido partido=new Partido();
+        partido.setId_Local(1);
+        partido.setId_Visitante(2);
+        Duelo duelo1=new Duelo();
+        duelo1.setId_Local(4);
+        duelo1.setId_Visitante(5);
+        Duelo duelo2=new Duelo();
+        duelo2.setId_Local(40);
+        duelo2.setId_Visitante(50);
+
+        PartidoNombre pn=new PartidoNombre(partido,"Caraescombros","Los Machacaos","Futbol");
+        DueloNombre dn=new DueloNombre(duelo1,"Asun","Fernando","Programación");
+        DueloNombre dn2=new DueloNombre(duelo2,"Miguel Angel","Leo","Java");
+
+
+        encuentro.add(pn);
+        encuentro.add(dn);
+        encuentro.add(dn2);
+        return encuentro;
+    }
+    public class miFuncion implements Runnable,Parcelable{
+        public miFuncion(){}
+
+        protected miFuncion(Parcel in) {
+        }
+
+        public final Creator<miFuncion> CREATOR = new Creator<miFuncion>() {
+            @Override
+            public miFuncion createFromParcel(Parcel in) {
+                return new miFuncion(in);
+            }
+
+            @Override
+            public miFuncion[] newArray(int size) {
+                return new miFuncion[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+        }
+
+        @Override
+        public void run() {
+            Toast.makeText(AlumnoActivity.this, "Funciona!!!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
