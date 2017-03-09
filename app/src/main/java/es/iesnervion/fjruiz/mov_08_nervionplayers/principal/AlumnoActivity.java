@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class AlumnoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
-
+    static Context miContexto;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
@@ -46,7 +47,7 @@ public class AlumnoActivity extends AppCompatActivity
         setContentView(R.layout.activity_alumno);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
+        miContexto=this;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -99,18 +100,30 @@ public class AlumnoActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_partidos:
+                Method method=null;
+                try {
+                    method= getClass().getDeclaredMethod("prueba", null);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                /*EncuentrosFragment encuentrosFragment = new EncuentrosFragment(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(AlumnoActivity.this, "Funciona!!!", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
 
-                EncuentrosFragment encuentrosFragment = new EncuentrosFragment();
+                //Paso el método por el constructor porque la clase Method no es parcelable ni serializable
+                //Y eso me impide que lo ponga en el Bundle.
+                //FIXME crear clase que herede de Method e implemente parcelable
+                EncuentrosFragment encuentrosFragment = new EncuentrosFragment(method);
                 Bundle datos=new Bundle();
                 //TODO recuperar de servidor
                 ArrayList<Encuentro> encuentros=generaEncuentros();
                 datos.putParcelableArrayList(EncuentrosFragment.CADENA_ENCUENTROS,encuentros);
-                datos.putParcelable(EncuentrosFragment.CADENA_FUNCION,new miFuncion());
                 encuentrosFragment.setArguments(datos);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                // Replace whatever is in the fragment_container view with this fragment,
-                // and add the transaction to the back stack so the user can navigate back
                 transaction.replace(R.id.content_alumno, encuentrosFragment);
                 transaction.addToBackStack(null);
 
@@ -119,19 +132,19 @@ public class AlumnoActivity extends AppCompatActivity
                 transaction.commit();
                 break;
             case R.id.nav_aniadir:
-
+                Toast.makeText(this, "En construcción", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_Grupos:
-
+                Toast.makeText(this, "En construcción", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_partidos_jugados:
-
+                Toast.makeText(this, "En construcción", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_user:
-
+                Toast.makeText(this, "En construcción", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_exit:
-
+                Toast.makeText(this, "En construcción", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -160,36 +173,7 @@ public class AlumnoActivity extends AppCompatActivity
         encuentro.add(dn2);
         return encuentro;
     }
-    public class miFuncion implements Runnable,Parcelable{
-        public miFuncion(){}
-
-        protected miFuncion(Parcel in) {
-        }
-
-        public final Creator<miFuncion> CREATOR = new Creator<miFuncion>() {
-            @Override
-            public miFuncion createFromParcel(Parcel in) {
-                return new miFuncion(in);
-            }
-
-            @Override
-            public miFuncion[] newArray(int size) {
-                return new miFuncion[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-        }
-
-        @Override
-        public void run() {
-            Toast.makeText(AlumnoActivity.this, "Funciona!!!", Toast.LENGTH_SHORT).show();
-        }
+    public static void prueba(){
+        Toast.makeText(miContexto, "Prueba función por parametros", Toast.LENGTH_SHORT).show();
     }
 }

@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.util.concurrent.RunnableFuture;
 
 import es.iesnervion.fjruiz.mov_08_nervionplayers.R;
 import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Encuentro;
+import es.iesnervion.fjruiz.mov_08_nervionplayers.principal.AlumnoActivity;
 
 
 /**
@@ -23,7 +26,7 @@ import es.iesnervion.fjruiz.mov_08_nervionplayers.model.Encuentro;
  */
 public class EncuentrosFragment extends ListFragment {
 
-    private Runnable miFuncion;
+    private Method miFuncion;
     private ArrayList<Encuentro> encuentros;
     private Encuentro[] arrayEncuentros;
     public static final String CADENA_FUNCION="mifuncioncita";
@@ -35,7 +38,8 @@ public class EncuentrosFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EncuentrosFragment() {
+    public EncuentrosFragment(Method miFuncion) {
+        this.miFuncion=miFuncion;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class EncuentrosFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            miFuncion = getArguments().getParcelable(CADENA_FUNCION);
+            //miFuncion = getArguments().getParcelable(CADENA_FUNCION);
             encuentros=getArguments().getParcelableArrayList(CADENA_ENCUENTROS);
             arrayEncuentros=new Encuentro[encuentros.size()];
             encuentros.toArray(arrayEncuentros);
@@ -66,12 +70,6 @@ public class EncuentrosFragment extends ListFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }*/
     }
 
     @Override
@@ -80,27 +78,13 @@ public class EncuentrosFragment extends ListFragment {
         //mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }*/
-
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         try {
-            miFuncion.run();
+            //Pongo null porque la función a la que llamo es estática, en caso de que no lo sea
+            //debo hacerlo sobre un objeto válido de la clase
+            miFuncion.invoke(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
