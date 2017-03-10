@@ -37,7 +37,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class RegisterActivity extends AppCompatActivity{
     private final int PICK_IMAGE_REQUEST=16541;
-    private String[] cadenasSpinner={"1º ESO","2º ESO","3º ESO","4º ESO",
+    private String[] cadenasSpinner={"Selecciona uno","1º ESO","2º ESO","3º ESO","4º ESO",
             "1º Bach","2º Bach","1º Ciclo","2º Ciclo"};
 
     @BindView(R.id.ibFoto)ImageButton foto;
@@ -89,12 +89,16 @@ public class RegisterActivity extends AppCompatActivity{
         startActivityForResult(cameraIntent, PICK_IMAGE_REQUEST);*/
     }
 
-    //FIXME
     @OnItemSelected(R.id.spnCurso)
     public void onItemSelected(AdapterView<?> parent, View v, int position,long id){
-        cursoSeleccionado=true;
-        //La posición del spinner empieza en 0, mientras que en la BBDD los cursos empiezan en 1
-        mCurso=position+1;
+        if(position!=0) {
+            cursoSeleccionado = true;
+            //La posición del spinner empieza en 0, mientras que en la BBDD los cursos empiezan en 1
+            //Sin embargo, en 0 tenemos Selecciona uno
+            mCurso = position;
+        }else{
+            cursoSeleccionado=false;
+        }
     }
 
     @Override

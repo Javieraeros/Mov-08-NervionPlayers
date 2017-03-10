@@ -128,7 +128,6 @@ public class LoginActivity extends AppCompatActivity
 
     @OnClick(R.id.register_button)
     public void register(View v){
-        //TODO mirar examen
         Intent registrar=new Intent(this,RegisterActivity.class);
         startActivityForResult(registrar, REGISTER_REQUEST);
     }
@@ -177,13 +176,8 @@ public class LoginActivity extends AppCompatActivity
                 isThreadRunning=true;
 
                 String basicAuth=authUtilities.creaBasicAuth(email,password);
-
-                //TODO cambiar
-                /*mr=new MiRetrofit(this);
-                mr.getToken(basicAuth);*/
-                showProgress(false);
-                isThreadRunning=false;
-                iniciaAlumnoActivity();
+                mr=new MiRetrofit(this);
+                mr.getToken(basicAuth);
             }
         }
     }
@@ -201,9 +195,7 @@ public class LoginActivity extends AppCompatActivity
                     showProgress(true);
                     isThreadRunning=true;
                     Alumno alumnoRegistrar=data.getParcelableExtra(bundle_Alumno);
-                    //TODO PostAlumno
-                    Toast.makeText(this, "El Alumno ha llegado "+alumnoRegistrar.getNombre(), Toast.LENGTH_SHORT).show();
-                    //mr.postAlumno(alumnoRegistrar);
+                    mr.postAlumno(alumnoRegistrar);
                 }
                 break;
         }
@@ -212,12 +204,18 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void getTokenAceptado(Response<Alumno> response) {
         isThreadRunning=false;
-        String auth=response.headers().get("Authorization");
-        miGuardador.saveAuthorization(auth);
+        showProgress(false);
+        if(response.isSuccessful()){
+            String auth=response.headers().get("Authorization");
+            miGuardador.saveAuthorization(auth);
 
-        Alumno miAlumno=response.body();
-        miGuardador.saveAlumno(miAlumno);
-        iniciaAlumnoActivity();
+            Alumno miAlumno=response.body();
+            miGuardador.saveAlumno(miAlumno);
+            iniciaAlumnoActivity();
+        }else{
+            Toast.makeText(this,"Error, el nombre o contraseña son incorrectos",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -229,13 +227,17 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void postAlumnoAceptado(Response<Alumno> response) {
         isThreadRunning=false;
-        String auth=response.headers().get("Authorization");
-        miGuardador.saveAuthorization(auth);
-
-        Alumno miAlumno=response.body();
-        miGuardador.saveAlumno(miAlumno);
         showProgress(false);
-        iniciaAlumnoActivity();
+        if(response.isSuccessful()) {
+            String auth = response.headers().get("Authorization");
+            miGuardador.saveAuthorization(auth);
+
+            Alumno miAlumno = response.body();
+            miGuardador.saveAlumno(miAlumno);
+            iniciaAlumnoActivity();
+        }else{
+            Toast.makeText(this, "Algo ha fallado, vuelve a intentarlo", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -283,8 +285,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 3;
     }
 
     /*

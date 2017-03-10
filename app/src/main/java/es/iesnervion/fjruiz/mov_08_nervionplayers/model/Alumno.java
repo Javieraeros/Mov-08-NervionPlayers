@@ -162,10 +162,6 @@ public class Alumno implements Parcelable,Serializable
     //endregion
 
     //region Metodos
-
-    //TODO cambiar si eso
-
-
     @Override
     public int describeContents() {
         return 0;
